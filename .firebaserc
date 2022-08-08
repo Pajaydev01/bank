@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "bank-43e10": {
+      "hosting": {
+        "bank": [
+          "bank-43e10"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "bank-43e10"
+  }
+}

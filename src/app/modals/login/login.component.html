@@ -1,0 +1,29 @@
+<p-toast></p-toast>
+<div *ngIf="data.loading" >
+  <p-progressSpinner></p-progressSpinner>
+</div>
+<p-panel #log>
+<div class="center-grid" *ngIf="!data.loading">
+  <div class="">
+    <span class="p-float-label">
+      <input id="mail" type="email" pInputText [(ngModel)]="data.details.mail">
+      <label for="mail" class="font-pop font-small">Email address</label>
+  </span>
+  </div>
+  <p-divider></p-divider>
+  <div class="">
+    <span class="p-float-label">
+      <input id="mail" type="password" pInputText [(ngModel)]="data.details.pass">
+      <label for="mail" class="font-pop font-small">Password</label>
+  </span>
+  </div>
+  <p-divider></p-divider>
+  <div class="">
+    <button pButton pRipple type="button" (click)="login()" label="login" class="p-button-outlined p-button-secondary w-full"></button>
+  </div>
+    <p-divider></p-divider>
+  <div class="">
+      <button pButton pRipple type="button" (click)="action.data.modal.close({ message: '505' })" label="Go to sign up" class="p-button-success"></button>
+  </div>
+</div>
+</p-panel>

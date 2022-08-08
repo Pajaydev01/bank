@@ -1,0 +1,109 @@
+<div class="" >
+<p-tabView #bod>
+  <p-tabPanel header="Intra-bank Transfer">
+<div class="center-flex animate__animated">
+  <div class="">
+    <div class="">
+      <h1 class="font-mont font-low">Send money to your bank</h1>
+    </div>
+     <p-divider></p-divider>
+    <div class="">
+      <span class="p-float-label">
+     <p-inputNumber [(ngModel)]="data.user.number" [maxlength]="10" inputId="withoutgrouping" [useGrouping]="false" (onInput)="check($event)">
+     </p-inputNumber>
+     <label for="withoutgrouping" class="font-pop font-small align-center">Account number</label>
+     </span>
+     <i class="pi pi-spin pi-spinner" style="font-size: 1rem" *ngIf="data.nameLoad"></i>
+     <p *ngIf="data.receiver" class="font-pop font-small">{{data.receiver}}</p>
+ </div>
+ <p-divider></p-divider>
+ <div>
+   <span class="p-float-label">
+      <p-inputNumber inputId="integeronly" [(ngModel)]="data.user.amount" [disabled]="checker(data.receiver)">
+      </p-inputNumber>
+      <label for="integeronly" class="font-pop font-small align-center">Amount</label>
+      <p *ngIf="data.charges">{{data.charges}}</p>
+      </span>
+  </div>
+   <p-divider></p-divider>
+  <div>
+    <textarea pInputTextarea [(ngModel)]="data.user.remark" placeholder="Remark"></textarea>
+  </div>
+ <p-divider></p-divider>
+ <div class="">
+   <input
+  type="password"
+  pattern="[0-9]{4}"
+  maxlength="4"
+  placeholder="Transaction pin"
+  [disabled]="checker(data.user.amount)"
+  [(ngModel)]="data.user.pin"
+  pPassword
+/>
+ </div>
+  <p-divider></p-divider>
+ <div class="">
+   <button *ngIf="data.user.pin" pButton pRipple type="button" [disabled]="checkerPin(data.user.pin)" label="Send {{data.user.amount | currency: 'NGN'}}" class="p-button-outlined p-button-secondary w-full" (click)="pay()"></button>
+ </div>
+  </div>
+</div>
+  </p-tabPanel>
+  <p-tabPanel header="Inter bank transfer">
+    <div class="center-flex animate__animated">
+      <div class="">
+        <div class="">
+          <h1 class="font-mont font-low">Send money to other banks</h1>
+        </div>
+         <p-divider></p-divider>
+        <div class="">
+          <p-dropdown placeholder="Select bank" [options]="data.banks" [(ngModel)]="data.user.bank" optionLabel="name" class="w-full" [disabled]="checker('')" optionValue="name"></p-dropdown>
+        </div>
+           <p-divider></p-divider>
+        <div class="">
+          <span class="p-float-label">
+         <p-inputNumber [(ngModel)]="data.user.number" mode="decimal" inputId="withoutgrouping" [useGrouping]="false" [disabled]="checker(data.user.bank)" [maxlength]="10" (onInput)="check($event)">
+         </p-inputNumber>
+         <label for="withoutgrouping" class="font-pop font-small align-center">Account number</label>
+         </span>
+          <i class="pi pi-spin pi-spinner" style="font-size: 1rem" *ngIf="data.nameLoad"></i>
+         <p *ngIf="data.receiver" class="font-pop font-small">{{data.receiver}}</p>
+     </div>
+     <p-divider></p-divider>
+     <div>
+       <span class="p-float-label">
+         <p-inputNumber inputId="integeronly" [(ngModel)]="data.user.amount" [disabled]="checker(data.receiver)">
+         </p-inputNumber>
+          <label for="integeronly" class="font-pop font-small align-center">Amount</label>
+          <p *ngIf="data.charges">{{data.charges}}</p>
+          </span>
+      </div>
+       <p-divider></p-divider>
+      <div>
+        <textarea pInputTextarea [(ngModel)]="data.user.remark" placeholder="Remark"></textarea>
+      </div>
+     <p-divider></p-divider>
+     <div class="">
+       <input
+      type="password"
+      pattern="[0-9]{4}"
+      maxlength="4"
+      placeholder="Transaction pin"
+      [disabled]="checker(data.user.amount)"
+      [(ngModel)]="data.user.pin"
+      pPassword
+    />
+     </div>
+      <p-divider></p-divider>
+     <div class="">
+       <button *ngIf="data.user.pin" pButton pRipple type="button" [disabled]="checkerPin(data.user.pin)" label="Send {{data.user.amount | currency: 'NGN'}}" class="p-button-outlined p-button-secondary w-full" (click)="pay()"></button>
+     </div>
+      </div>
+    </div>
+  </p-tabPanel>
+</p-tabView>
+</div>
+
+<!-- create overlay for loading and spinner -->
+<p-blockUI [target]="bod" [blocked]="data['loading']">
+  <p-progressSpinner></p-progressSpinner>
+</p-blockUI>

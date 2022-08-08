@@ -1,0 +1,140 @@
+<p-menubar [model]='data.menuItems' class="animate__animated">
+    <ng-template pTemplate="end">
+      <div class="flex-full">
+      <h3 class="font-pop font-low">{{data?.user?.fullname}}</h3>
+      <button pButton type="button" label="Sign out" icon="pi pi-sign-out" class="p-button-text p-button-secondary" (click)="signout($event)"></button>
+      </div>
+    </ng-template>
+</p-menubar>
+<div class="">
+<!-- menu open icon -->
+<div class="flex-full animate__animated">
+  <div class=""></div>
+  <div>
+  <div>
+<p class="font-pop font-low align-center">Main balance: {{data?.user?.balance | currency: 'NGN'}}</p>
+</div>
+</div>
+</div>
+
+<div class="animate__animated">
+<!-- main content -->
+<div class="">
+  <div class="flex-norm">
+    <div class="desktop">
+      <h1 class="font-pop font-low align-center"><strong>Spendings</strong></h1>
+    <p-divider></p-divider>
+    <div>
+    <p class="font-pop font-low align-center">  {{17500 | currency: 'NGN'}}</p>
+      <p-chart type="pie"  width="30vw" height="30vh" [data]="data.mapItems.datas" [options]="data.mapItems.datas"></p-chart>
+    </div>
+    </div>
+  <div>
+  <h1 class="font-pop font-low align-center"><strong>Active cards</strong></h1>
+  <p-divider></p-divider>
+  <div class="card">
+<!-- <p class="font-pop">Deactivate</p> -->
+  </div>
+</div>
+</div>
+    <p-divider></p-divider>
+    <div class="">
+      <!-- Transactions here -->
+      <h1 class="font-pop font-low align-center">Transactions</h1>
+      <p-divider></p-divider>
+      <div class="">
+        <p-virtualScroller [value]="data.transaction" scrollHeight="450px" [itemSize]="100">
+             <ng-template pTemplate="header">
+                 Recent
+             </ng-template>
+             <ng-template let-item pTemplate="item">
+                 <div class="flex-full">
+                     <div>
+                         <p class="mb-2 font-pop font-low"><span><i class="pi pi-send"></i> </span> {{item.name}} </p>
+                         <div class="">
+                           <p class="font-fade font-small font-pop">{{item.type}}</p>
+                         </div>
+                     </div>
+                     <div class="">
+                         <h2 class="font-pop font-low">{{sign(item.action)}} {{item.amount | currency: item.currency}}</h2>
+                     </div>
+                 </div>
+                   <p-divider></p-divider>
+             </ng-template>
+         </p-virtualScroller>
+      </div>
+    </div>
+    <div class="mobile">
+      <h1 class="font-pop font-low align-center"><strong>Spendings</strong></h1>
+    <p-divider></p-divider>
+        <p class="font-pop font-low align-center">  {{17500 | currency: 'NGN'}}</p>
+    <div class="center-flex">
+      <p-chart type="pie"  width="30vw" height="30vh" [data]="data.mapItems.datas" [options]="data.mapItems.datas"></p-chart>
+    </div>
+    </div>
+
+</div>
+</div>
+</div>
+
+
+<!-- create reciept here -->
+<p-dialog [(visible)]="data.receipt" [breakpoints]="{'960px': '75vw', '640px': '90vw'}" [style]="{width: '30vw'}">
+  <div class="">
+    <h2 class="font-nic align-center">Success</h2>
+  </div>
+  <div class="">
+    <p class="font-pop align-center font-low">Amount</p>
+    <h1 class="font-pop font-low align-center">{{data?.user?.amount | currency : 'NGN'}}</h1>
+  </div>
+  <p-divider></p-divider>
+  <div class="">
+    <div class="flex-full">
+      <p class="font-pop font-small font-fade">Beneficiary details</p>
+      <div class="">
+        <h3 class="font-pop font-low">{{data?.user?.reciever}}</h3>
+        <p class="font-pop font-small"><span>{{(data?.user?.bank)?data?.user?.bank: 'Intrabank'}}</span> | <span>{{data?.user?.number}}</span></p>
+      </div>
+    </div>
+  </div>
+  <p-divider></p-divider>
+  <div class="">
+    <div class="flex-full">
+        <p class="font-pop font-small font-fade">Sender details</p>
+        <div class="">
+          <h3 class="font-pop font-low">{{data?.user?.fullname}}</h3>
+          <p class="font-pop font-small"><span>Bank</span> | <span>{{data?.user?.number}}</span></p>
+        </div>
+    </div>
+  </div>
+    <p-divider></p-divider>
+    <div class="">
+      <div class="flex-full">
+        <p class="font-pop font-small font-fade">Paid on</p>
+        <div class="">
+          <h3 class="font-pop font-low">{{data?.user?.date}}</h3>
+          <p class="font-pop font-small">{{data?.user?.time}}</p>
+        </div>
+      </div>
+      </div>
+        <p-divider></p-divider>
+        <div class="flex-full">
+          <p class="font-pop font-small font-fade">Details</p>
+          <div class="">
+            <h3 class="font-pop font-small">{{data?.user?.remark}}</h3>
+          </div>
+        </div>
+          <p-divider></p-divider>
+          <div class="flex-full">
+            <p class="font-pop font-small font-fade">Reference</p>
+            <div class="">
+              <h3 class="font-pop font-small">{{data?.user?.ref}}</h3>
+            </div>
+          </div>
+          <ng-template pTemplate="footer">
+  <p class="font-pop font-low align-center">&copy; 2022 Bank, All rights reserved</p>
+  </ng-template>
+</p-dialog>
+
+<p-toast></p-toast>
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>

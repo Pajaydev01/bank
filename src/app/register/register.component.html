@@ -1,0 +1,107 @@
+<div class="animate__animated">
+  <!-- use the tabs menu to navigate through the different reg phases -->
+  <div class="center-grid">
+
+    <h1 class="font-pop align-center font-low">Account opening</h1>
+    <button pButton pRipple type="button" (click)="action.navigate('/signin')" label="Sign-in instead" class="p-button-outlined p-button-secondary w-full"></button>
+  </div>
+  <p-tabView #bod [(activeIndex)]="data.index" #bodi>
+    <p-tabPanel header="General information">
+      <div class="center-grid">
+<div class="">
+  <span class="p-float-label">
+    <input id="name" type="text" pInputText [(ngModel)]="data.user.fullname">
+    <label for="name" class="font-pop font-small">Full name</label>
+</span>
+</div>
+<p-divider></p-divider>
+<div class="">
+  <span class="p-float-label">
+    <input id="mail" type="email" pInputText [(ngModel)]="data.user.email">
+    <label for="mail" class="font-pop font-small">Email address</label>
+</span>
+</div>
+<p-divider></p-divider>
+<div class="">
+  <span class="p-float-label">
+    <input id="phone" type="number" pInputText [(ngModel)]="data.user.phone">
+    <label for="phone" class="font-pop font-small">Phone number</label>
+</span>
+</div>
+<p-divider></p-divider>
+<div class="">
+      <p class="font-pop font-small">Date of birth</p>
+<p-calendar [(ngModel)]="data.user.dob"></p-calendar>
+</div>
+<p-divider></p-divider>
+<div class="">
+  <span class="p-float-label">
+  <textarea id="address" pInputTextarea></textarea>
+    <label for="address" class="font-pop font-small">Home address</label>
+</span>
+</div>
+<p-divider></p-divider>
+<div class="">
+  <button pButton pRipple type="button" (click)="data.first=false; data.index=1;" label="Proceed" class="p-button-outlined p-button-secondary w-full"></button>
+</div>
+</div>
+    </p-tabPanel>
+    <p-tabPanel header="Other info" [disabled]="data.first">
+      <div class="center-grid animate__animated">
+        <div class="">
+          <span class="p-float-label">
+            <input id="bvn" type="number" pInputText [(ngModel)]="data.user.bvn">
+            <label for="bvn" class="font-pop font-small">BVN number</label>
+        </span>
+        </div>
+        <p-divider></p-divider>
+        <div class="">
+          <span class="p-float-label">
+            <input id="nin" type="number" pInputText [(ngModel)]="data.user.nin">
+            <label for="nin" class="font-pop font-small">NIN number</label>
+        </span>
+        </div>
+        <p-divider></p-divider>
+        <div class="">
+          <span class="p-float-label">
+            <p-password id="pass" [(ngModel)]="data.user.password"></p-password>
+            <label for="pass" class="font-pop font-small">Choose a password</label>
+        </span>
+        </div>
+        <p-divider></p-divider>
+        <div class="">
+          <span class="p-float-label">
+            <input id="pass2" type="password" pInputText [(ngModel)]="data.user.password2">
+            <label for="pass2" class="font-pop font-small">Repeat password</label>
+        </span>
+        </div>
+        <p-divider></p-divider>
+        <div class="">
+          <button pButton pRipple type="button" (click)="checker()" label="Proceed" class="p-button-outlined p-button-secondary w-full"></button>
+        </div>
+      </div>
+    </p-tabPanel>
+    <p-tabPanel header="Upload documents" [disabled]="data.second">
+      <div class="">
+        <p class="font-pop font-small">Upload your national identity slip and passport photograph of yourself</p>
+        <p-fileUpload name="demo[]" chooseLabel="Select photos" [multiple]="true" uploadLabel="Save and proceed" [customUpload]="true"
+        [fileLimit]="2"
+        (uploadHandler)="addImage($event)"
+        accept="image/*">
+        <ng-template pTemplate="content">
+                   <ul *ngIf="data?.img?.length">
+                       <li *ngFor="let file of data?.img">{{file.name}} - {{file.size}} bytes</li>
+                   </ul>
+               </ng-template>
+        </p-fileUpload>
+      </div>
+      <div class="">
+        <button pButton pRipple type="button" (click)="submit()" label="Register" class="p-button-outlined p-button-secondary w-full" [disabled]="!data?.img"></button>
+      </div>
+    </p-tabPanel>
+  </p-tabView>
+</div>
+<p-toast></p-toast>
+<p-blockUI [target]="bodi" [blocked]="data['loading']">
+  <p-progressSpinner></p-progressSpinner>
+</p-blockUI>
